@@ -22,6 +22,10 @@ SBarcodeScanner::SBarcodeScanner(QObject* parent)
     connect(&m_decoder, &SBarcodeDecoder::capturedChanged, this, &SBarcodeScanner::setCaptured, Qt::QueuedConnection);
     connect(&m_decoder, &SBarcodeDecoder::errorOccured, this, &SBarcodeScanner::errorOccured, Qt::QueuedConnection);
     workerThread.start();
+
+    permissionsController = new SPermissionsController(this);
+    QObject::connect(permissionsController, &SPermissionsController::cameraPermissionGranted,
+                     this, &SBarcodeScanner::setCameraOnInit);
 }
 
 SBarcodeScanner::~SBarcodeScanner()
@@ -41,7 +45,7 @@ void SBarcodeScanner::componentComplete()
     if(m_camera.isNull())
     {
         sDebug() << "No camera provided. Setting default camera";
-        setCamera(makeDefaultCamera());
+        setCameraOnInit();
     }
 }
 
@@ -124,6 +128,12 @@ QCamera *SBarcodeScanner::makeDefaultCamera()
     camera->setFocusMode(QCamera::FocusModeAuto);
     camera->setCameraFormat(format);
     return camera;
+}
+
+void SBarcodeScanner::setCameraOnInit()
+{
+    qDebug() << "Set camera on init!";
+    setCamera(makeDefaultCamera());
 }
 
 void SBarcodeScanner::setCaptured(const QString& captured)

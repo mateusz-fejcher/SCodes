@@ -13,6 +13,7 @@
 #include <QOpenGLContext>
 #include <QOpenGLFunctions>
 
+#include "SPermissionsController.h"
 #include "SBarcodeDecoder.h"
 /*!
  * \brief The SBarcodeScanner class processes the video input from Camera,
@@ -69,6 +70,9 @@ signals:
     void errorOccured(const QString& errorString);
 protected:
     QCamera* makeDefaultCamera();
+
+private slots:
+    void setCameraOnInit();
 private:
     /// Decoder object, doing the actual Qr detection and conversion
     SBarcodeDecoder m_decoder;
@@ -105,6 +109,8 @@ private:
      * \param bool available - camera availability status
      */
     void setCameraAvailable(bool available);
+
+    SPermissionsController* permissionsController = nullptr;
 };
 
 #endif // SBARCODESCANNER_H

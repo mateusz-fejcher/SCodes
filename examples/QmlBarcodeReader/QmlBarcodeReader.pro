@@ -36,3 +36,10 @@ android {
     ANDROID_ABIS = armeabi-v7a
 }
 
+ios {
+    QMAKE_INFO_PLIST = Info.plist
+    OTHER_FILES += $$QMAKE_INFO_PLIST
+    CONFIG -= bitcode
+    QMAKE_LFLAGS += -ObjC
+}
+

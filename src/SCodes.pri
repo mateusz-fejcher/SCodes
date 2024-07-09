@@ -37,6 +37,7 @@ HEADERS += \
     $$PWD/SBarcodeDecoder.h \
     $$PWD/SBarcodeFormat.h \
     $$PWD/SBarcodeGenerator.h \
+    $$PWD/SPermissionsController.h \
     $$PWD/qvideoframeconversionhelper_p.h \
     $$PWD/zxing-cpp/core/src/BarcodeFormat.h \
     $$PWD/zxing-cpp/core/src/BinaryBitmap.h \
@@ -195,6 +196,7 @@ SOURCES += \
     $$PWD/SBarcodeDecoder.cpp \
     $$PWD/SBarcodeFormat.cpp \
     $$PWD/SBarcodeGenerator.cpp \
+    $$PWD/SPermissionsController.cpp \
     $$PWD/zxing-cpp/core/src/BarcodeFormat.cpp \
     $$PWD/zxing-cpp/core/src/BinaryBitmap.cpp \
     $$PWD/zxing-cpp/core/src/BitArray.cpp \
