@@ -106,7 +106,7 @@ QCamera *SBarcodeScanner::makeDefaultCamera()
     auto supportedFormats = camera->cameraDevice().videoFormats();
     for (auto f : supportedFormats)
     {
-        sDebug() << "Supported format: "
+        qDebug() << "Supported format: "
                  << f.pixelFormat()
                  << f.resolution()
                  << "  FPS:" << f.minFrameRate() << "-" << f.maxFrameRate();
@@ -121,9 +121,17 @@ QCamera *SBarcodeScanner::makeDefaultCamera()
     std::sort(supportedFormats.begin(),supportedFormats.end(),[](const auto& f1, const auto& f2){
         QSize r1 = f1.resolution();
         QSize r2 = f2.resolution();
-        return r1.height()*r1.width() < r2.height()*r2.width();
+        return r1.height()*r1.width() > r2.height()*r2.width();
     });
     auto format = supportedFormats.last();
+
+    for(auto videoFormat : supportedFormats) {
+        // Resolution width above 1500 have difficulties to scan QR Code.
+        if (videoFormat.resolution().width() < 1500) {
+            format = videoFormat;
+            break;
+        }
+    }
 
     camera->setFocusMode(QCamera::FocusModeAuto);
     camera->setCameraFormat(format);
